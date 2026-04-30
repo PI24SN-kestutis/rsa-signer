@@ -24,7 +24,7 @@ public class Main {
     private static final String HOST = "localhost";
 
     /** Prievadas (portas), prie kurio jungiamasi. */
-    private static final int PORT = 5000;
+    private static final int PORT = 5001;
 
     /**
      * Pagrindinis programos įėjimo taškas.
