@@ -1,0 +1,37 @@
+Tikslas:
+
+Jūsų tikslas – įgyvendinti RSA skaitmeninio parašo schemą. Galite naudoti kriptografines bibliotekas arba pritaikyti ankstesnės RSA užduoties sprendimą, atlikdami nedidelius pakeitimus.
+
+Užduotis suskirstyta į tris sudėtingumo lygius. Pasirinkite vieną lygį ir jį įgyvendinkite. Jūsų sprendimas turi aiškiai parodyti skaitmeninio parašo proceso supratimą ir komunikaciją tarp programų (jei taikoma).
+
+Pasirinkite vieną užduoties sudėtingumo lygį:
+
+1 lygis – viena programa – daugiausia 6 taškai
+
+Sukurkite vieną programą su šiais komponentais:
+
+Įvestis ir parašo generavimas: teksto įvesties laukas, kuriame vartotojas įveda pranešimą; pateikus duomenis, sugeneruojamas ir parodomas RSA skaitmeninis parašas.
+Parašo klastojimas / keitimas: antras komponentas (pvz., teksto laukas), kuris gauna sugeneruotą parašą ir leidžia vartotojui rankiniu būdu pakeisti jo reikšmę (imituoti pakeitimą).
+Tikrinimas: trečias komponentas, kuriame vartotojas įveda pranešimą; taikomas RSA parašo tikrinimo procesas naudojant (galimai pakeistą) parašą, o rezultatas – galiojantis arba negaliojantis – parodomas ekrane.
+Paaiškinimas: būkite pasirengę paaiškinti, kaip veikia skaitmeniniai parašai, įskaitant tokias pagrindines sąvokas kaip maišos funkcija, pasirašymas ir tikrinimas.
+2 lygis – dvi programos – daugiausia 8 taškai
+
+Sukurkite dvi atskiras programas, kurios tarpusavyje komunikuoja naudodamos programinę jungtį (angl. sockets).
+
+1 programa – pasirašymas ir siuntimas: įveskite pranešimą ir sugeneruokite RSA skaitmeninį parašą; naudodami programinę jungtį (angl. sockets) nusiųskite pranešimą, skaitmeninį parašą ir viešąjį raktą antrajai programai tinkamu duomenų formatu (pvz., JSON).
+2 programa – gavimas ir tikrinimas: per programinę jungtį (angl. sockets) gaukite pranešimą, parašą ir viešąjį raktą; patikrinkite parašą ir parodykite, ar jis galiojantis, ar negaliojantis.
+Paaiškinimas: būkite pasirengę paaiškinti parašo generavimo procesą, tikrinimo procesą ir kodėl tai yra saugu.
+3 lygis – trys programos – daugiausia 10 taškų
+
+Išplėskite 2 lygį, pridėdami trečią programą, kuri imituotų parašo pakeitimą.
+
+1 programa – pasirašymas ir siuntimas: įveskite pranešimą, sugeneruokite jo RSA parašą ir per programinę jungtį (angl. sockets) nusiųskite pranešimą, parašą ir viešąjį raktą 2 programai.
+2 programa – pakeitimo tarpininkė: gaukite duomenis iš 1 programos; leiskite vartotojui rankiniu būdu pakeisti skaitmeninį parašą; persiųskite (galimai pakeistus) duomenis 3 programai.
+3 programa – tikrinimas: gaukite pranešimą, parašą ir viešąjį raktą iš 2 programos; patikrinkite parašą ir parodykite, ar jis teisingas, ar buvo pakeistas.
+Paaiškinimas: būkite pasirengę paaiškinti visą procesą ir kaip pakeitimas paveikia tikrinimą.
+
+Programos veikimo eiga:
+Siuntėjas apskaičiuoja pranešimo maišą, naudodamas maišos funkciją (pvz., SHA-256). Tada ši maišos reikšmė yra pasirašoma naudojant siuntėjo RSA privatųjį raktą, taip gaunant skaitmeninį parašą. Gavėjui siunčiamas pranešimas, parašas ir siuntėjo RSA viešasis raktas.
+Gavėjas tikrina parašą, iššifruodamas jį siuntėjo viešuoju raktu ir atgaudamas pradinę maišos reikšmę. Nepriklausomai nuo to, gavėjas apskaičiuoja gauto pranešimo maišą. Jei abi maišos reikšmės sutampa, parašas yra galiojantis – tai patvirtina, kad pranešimas nebuvo pakeistas ir buvo pasirašytas teisėto siuntėjo. Jei reikšmės nesutampa (pvz., dėl pakeitimo), parašas yra negaliojantis.
+2 ir 3 lygiuose duomenys tarp programų perduodami naudojant programinę jungtį (angl. sockets). Perduodamiems duomenims struktūrizuoti turėtų būti naudojamas tinkamas formatas, pavyzdžiui, JSON (pranešimas, parašas, viešasis raktas).
+3 lygyje 2 programa veikia kaip žmogaus-per-vidurį tarpininkė (angl. man-in-the-middle proxy), kuri gali perimti ir pakeisti parašą prieš persiųsdama jį toliau. Tai parodo, kaip skaitmeniniai parašai apsaugo nuo tokių atakų – bet koks parašo ar pranešimo pakeitimas sukels tikrinimo nesėkmę 3 programoje.
