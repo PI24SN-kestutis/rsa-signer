@@ -23,7 +23,7 @@ public class Main {
     /** Serverio, kuriam siunčiami duomenys, adresas. */
     private static final String HOST = "localhost";
 
-    /** Prievadas (portas), prie kurio jungiamasi. */
+    /** Prievadas (portas), prie kurio jungiamasi. be proxy buvo 500*/
     private static final int PORT = 5001;
 
     /**
